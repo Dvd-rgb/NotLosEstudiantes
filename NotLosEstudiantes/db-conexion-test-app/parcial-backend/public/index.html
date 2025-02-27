@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RateMyProfessor - Find & Rate Your Professors</title>
+    <link rel="stylesheet" href="/css/search.css">
+    <style>
+        :root {
+            --primary: #4a6baf;
+            --secondary: #f8f9fa;
+            --accent: #ffc107;
+            --text: #333;
+            --light-gray: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--text);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e0a800;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-box {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-box button {
+            padding: 1rem 1.5rem;
+            background-color: var(--accent);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: var(--secondary);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .top-rated {
+            padding: 4rem 0;
+        }
+        
+        .professor-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .professor-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .professor-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .professor-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .professor-info {
+            padding: 1.5rem;
+        }
+        
+        .professor-info h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stars {
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+        
+        .subject {
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">NotLosEstudiantes</a>
+                <ul class="nav-links">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Buscar profesores</a></li>
+                    <li><a href="#">Universidades</a></li>
+                    <li><a href="#">Acerca de nosotros</a></li>
+                    <li><a href="#" class="btn btn-primary">Ingresar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Find and Rate the Best Professors</h1>
+            <p>Make informed decisions about your education. Search for professors, read reviews, and share your experiences to help other students.</p>
+            <div class="search-box">
+                <input type="text" placeholder="Search professors or schools...">
+                <button>Search</button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">La mejor página de reviews universitarias</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Reviews de estudiantes</h3>
+                    <p>Todas nuestras reviews son escritas por estudiantes verificados.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎓</div>
+                    <h3>La base de datos más completa de reviews</h3>
+                    <p>Accede a cientos de reseñas de distintas universidades.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Comparte tu experiencia</h3>
+                    <p>Ayuda a otros estudiantes compartiendo tus experiencias!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="top-rated">
+        <div class="container">
+            <h2 class="section-title">Mejores Profesores</h2>
+            <div class="professor-cards">
+                <div class="professor-card">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.kindpng.com%2Fpicc%2Fm%2F722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png&f=1&nofb=1&ipt=135ae7f543d382e620db23e37149b0aa99c27c535985f866b3407252913c1312&ipo=images" alt="Profesor" class="professor-img">
+                    <div class="professor-info">
+                        <h3>Dra. María García</h3>
+                        <div class="rating">
+                            <div class="stars">★★★★★</div>
+                            <span>5.0</span>
+                        </div>
+                        <p class="subject">Ciencias de la Computación</p>
+                        <p>"¡La mejor profesora que he tenido! Sus clases son desafiantes pero gratificantes."</p>
+                    </div>
+                </div>
+                <div class="professor-card">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.kindpng.com%2Fpicc%2Fm%2F722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png&f=1&nofb=1&ipt=135ae7f543d382e620db23e37149b0aa99c27c535985f866b3407252913c1312&ipo=images" alt="Profesor" class="professor-img">
+                    <div class="professor-info">
+                        <h3>Prof. José Cuervo</h3>
+                        <div class="rating">
+                            <div class="stars">★★★★☆</div>
+                            <span>4.8</span>
+                        </div>
+                        <p class="subject">Economía</p>
+                        <p>"Hace que los temas complejos sean fáciles de entender. Muy accesible y servicial."</p>
+                    </div>
+                </div>
+                <div class="professor-card">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.kindpng.com%2Fpicc%2Fm%2F722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png&f=1&nofb=1&ipt=135ae7f543d382e620db23e37149b0aa99c27c535985f866b3407252913c1312&ipo=images" alt="Profesor" class="professor-img">
+                    <div class="professor-info">
+                        <h3>Dra. Sara Valentina</h3>
+                        <div class="rating">
+                            <div class="stars">★★★★☆</div>
+                            <span>4.7</span>
+                        </div>
+                        <p class="subject">Psicología</p>
+                        <p>"Clases dinámicas y calificación justa. Siempre disponible en su horario de oficina."</p>
+                    </div>
+                </div>
+                <div class="professor-card">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.kindpng.com%2Fpicc%2Fm%2F722-7221920_placeholder-profile-image-placeholder-png-transparent-png.png&f=1&nofb=1&ipt=135ae7f543d382e620db23e37149b0aa99c27c535985f866b3407252913c1312&ipo=images alt="Profesor" class="professor-img">
+                    <div class="professor-info">
+                        <h3>Prof. Brayan Reyes</h3>
+                        <div class="rating">
+                            <div class="stars">★★★★☆</div>
+                            <span>4.6</span>
+                        </div>
+                        <p class="subject">Matemáticas</p>
+                        <p>"Excelente para explicar conceptos difíciles. Proporciona excelentes recursos de estudio."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 RateMyProfessor. Todos los derechos reservados.</p>
+            <ul class="footer-links">
+                <li><a href="#">Términos de servicio</a></li>
+                <li><a href="#">Política de privacidad</a></li>
+                <li><a href="#">Contáctanos</a></li>
+                <li><a href="#">Preguntas frecuentes</a></li>
+            </ul>
+        </div>
+    </footer>
+    
+    <script src="/js/search.js"></script>
+</body>
+</html>
