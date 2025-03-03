@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup Form</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .header i {
+            font-size: 36px;
+            color: #6a11cb;
+            margin-right: 12px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .input-box {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(106, 17, 203, 0.2);
+            border-radius: 8px;
+            font-size: 16px;
+            padding-left: 45px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .input-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #6a11cb;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .toggle-btn {
+            font-size: 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            color: #6a11cb;
+            display: inline-block;
+        }
+
+        .toggle-btn:hover {
+            color: #2575fc;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            margin-top: 10px;
+            font-size: 14px;
+            color: red;
+        }
+
+        /* Toggle between forms */
+        .signup-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <i class="bx bxs-graduation"></i>
+            <h1>Los Alumnos</h1>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+            <h1 class="form-title">Login</h1>
+            <div class="input-box">
+                <i class="bx bxs-user"></i>
+                <input type="text" id="login-username" placeholder="Username or Email" required>
+            </div>
+            <div class="input-box">
+                <i class="bx bxs-lock"></i>
+                <input type="password" id="login-password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <p id="login-message" class="error-message"></p>
+            <p class="toggle-btn" onclick="toggleForms()">Don't have an account? Register</p>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signupForm" class="signup-form">
+            <h1 class="form-title">Register</h1>
+            <div class="input-box">
+                <i class="bx bxs-user"></i>
+                <input type="text" id="signup-username" placeholder="Username" required>
+            </div>
+            <div class="input-box">
+                <i class="bx bxs-envelope"></i>
+                <input type="email" id="signup-email" placeholder="Email" required>
+            </div>
+            <div class="input-box">
+                <i class="bx bxs-lock"></i>
+                <input type="password" id="signup-password" placeholder="Password" required>
+            </div>
+            <div class="input-box">
+                <i class="bx bxs-institution"></i>
+                <input type="text" id="signup-university" placeholder="University">
+            </div>
+            <div class="input-box">
+                <i class="bx bxs-book"></i>
+                <input type="text" id="signup-plan" placeholder="Study Plan">
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
+            <p id="signup-message" class="error-message"></p>
+            <p class="toggle-btn" onclick="toggleForms()">Already have an account? Login</p>
+        </form>
+    </div>
+
+    <script>
+        function toggleForms() {
+            document.getElementById("loginForm").classList.toggle("signup-form");
+            document.getElementById("signupForm").classList.toggle("signup-form");
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("login-username").value;
+    const password = document.getElementById("login-password").value;
+    const messageElement = document.getElementById("login-message");
+
+    try {
+        const response = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            messageElement.style.color = "green";
+            messageElement.textContent = "Login successful!";
+            setTimeout(() => {
+                window.location.href = "/"; // Redirect to main page
+            }, 1500);
+        } else {
+            messageElement.style.color = "red";
+            messageElement.textContent = "Incorrect credentials.";
+            document.getElementById("login-password").value = ""; // Clear password field
+        }
+    } catch (error) {
+        messageElement.style.color = "red";
+        messageElement.textContent = "An error occurred. Please try again.";
+        console.error("Login error:", error);
+    }
+});
+
+
+        document.getElementById("signupForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+            const user = {
+                nombre_usuario: document.getElementById("signup-username").value,
+                email: document.getElementById("signup-email").value,
+                contrasena: document.getElementById("signup-password").value,
+                universidad: document.getElementById("signup-university").value,
+                plan_de_estudios: document.getElementById("signup-plan").value
+            };
+
+            const response = await fetch("http://localhost:3000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(user)
+            });
+
+            const data = await response.json();
+            document.getElementById("signup-message").textContent = data.message; // Show backend message
+            
+        });
+    </script>
+
+</body>
+</html>
